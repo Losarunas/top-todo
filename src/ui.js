@@ -1,12 +1,12 @@
 export default class UI {
     static updateUI(todos) {
         let container = '';
-        todos.forEach(item => {
+        todos.forEach(project => project.todos.forEach(item => {
             container +=
                 `<tr>
             <td>${item.title}</td>
             <td>${item.dueDate}</td>
-            <td>Work</td>
+            <td>${project.name}</td>
             <td>${item.date}</td>
             <td>
                 <div class="main__table-priority">
@@ -18,7 +18,7 @@ export default class UI {
             <td class="main__table__edit"><i class="fa-solid fa-pencil"></i></td>
             <td class="main__table__delete"><i class="fa-solid fa-trash-can"></i></td>
         </tr>`
-        })
+        }))
         document.querySelector(".main__todolist").innerHTML = container;
     }
     // static cleanTodoInput() {
