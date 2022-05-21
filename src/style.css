@@ -9,15 +9,15 @@ body {
     background-color: #F5F5F5;
 }
 
-li{
+li {
     list-style: none;
 }
 
-i{
+i {
     cursor: pointer;
 }
 
-.button-primary{
+.button-primary {
     border: 0px;
     background-color: #9575CD;
     color: #fff;
@@ -27,22 +27,23 @@ i{
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 50%);
     transition: .3s all ease;
 }
-.button-primary:hover{
+
+.button-primary:hover {
     background-color: #c7a4ff;
     box-shadow: 1px 3px 4px rgba(0, 0, 0, 90%);
 }
 
-header{
+header {
     padding: 10px;
     background-color: #9575CD;
     margin-bottom: 20px;
 }
 
-#header__add-quick{
+#header__add-quick {
     text-align: center;
 }
 
-#quick-add{
+#quick-add {
     background-color: #C6A3FF;
     color: #000;
     border: 0;
@@ -51,13 +52,14 @@ header{
     box-shadow: 2px 4px 30px rgba(0, 0, 0, 50%);
 }
 
-article{
+article {
     width: 1400px;
     min-height: 800px;
     margin: 0 auto;
     display: flex;
 }
-.navigation{
+
+.navigation {
     width: 20%;
     padding: 20px;
     background-color: #9575CD;
@@ -66,86 +68,111 @@ article{
     border-radius: 15px 0 0 15px;
 }
 
-.navigation__header{
+.navigation__header {
     position: relative;
     margin-bottom: 15px;
 }
-.navigation__header h3{
+
+.navigation__header h3 {
     font-size: 20px;
 }
-.navigation-add-btn{
+
+.navigation__project--name {
+    cursor: pointer;
+}
+
+.navigation-add-btn {
     position: absolute;
     top: 3px;
     right: 0;
     cursor: pointer;
 }
-.navigation-add-btn i{
+
+.navigation-add-btn i {
     font-size: 110%;
 }
 
-.main{
+.navigation__project--remove {
+    float: right;
+    cursor: pointer;
+    transition: .3s ease all;
+}
+
+.navigation__project--remove:hover {
+    font-weight: bold;
+}
+
+
+.main {
     width: 80%;
     background-color: #65499C;
     color: #fff;
     border-radius: 0 15px 15px 0;
     padding: 40px;
 }
-.main h2{
+
+.main h2 {
     text-align: center;
 }
 
-.main__add-todo{
+.main__add-todo {
     display: flex;
     justify-content: space-between;
     margin: 30px 0;
 }
 
-.main__todo-btn{
+.main__todo-btn {
     align-self: center;
 }
 
-.main__todo-group{
+.main__todo-group {
     display: flex;
     flex-direction: column;
 }
 
-#main__todo{
+#main__todo {
     width: 300px;
     padding: 5px;
 }
-.main__add-todo__selection{
+
+.main__add-todo__selection {
     padding: 5px;
     width: 200px;
 }
 
-.main__add-todo__date{
+.main__add-todo__date {
     cursor: pointer;
     padding: 6px;
 }
 
-.main__todo-group--priority{
+.main__todo-group--priority {
     display: flex;
     align-items: center;
     font-size: 1.2rem;
 }
-.main__todo-group--priority i{
+
+.main__todo-group--priority i {
     padding: 0 5px;
 }
-.add-todo__priority-num{
+
+.add-todo__priority-num {
     padding: 0 4px;
     font-size: 1.6rem;
 }
-table{
+
+table {
     width: 100%;
     border-collapse: collapse;
 }
-td, th {
+
+td,
+th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
 
-.main__table-head{
+.main__table-head {
     background-color: #422972;
 }
 
@@ -153,42 +180,43 @@ tr:nth-child(even) {
     background-color: #9575CD;
 }
 
-tr:hover:not(:first-child){
+tr:hover:not(:first-child) {
     background-color: #c7a4ff;
 }
 
-.main__table-priority{
+.main__table-priority {
     display: flex;
     align-items: center;
 }
 
-.main__table-priority i{
+.main__table-priority i {
     padding: 0 4px;
 }
 
-.main__table__add-todo__priority{
+.main__table__add-todo__priority {
     padding: 0 2px;
 }
 
-.main__table__edit{
+.main__table__edit {
     text-align: center;
 }
 
-.main__table__delete{
+.main__table__delete {
     text-align: center;
 }
 
-.fa-trash-can{
+.fa-trash-can {
     transition: .3s ease all;
 }
 
-.fa-trash-can:hover{
+.fa-trash-can:hover {
     color: red;
 }
 
-.fa-pencil{
+.fa-pencil {
     transition: .3s ease all;
 }
-.fa-pencil:hover{
+
+.fa-pencil:hover {
     color: black;
 }

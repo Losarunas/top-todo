@@ -6,35 +6,25 @@ import Projects from './projects.js';
 import UI from './ui.js';
 import { format } from 'date-fns';
 
-const app = new Projects();
+
+// Random todos
 const defaultProject = new Project("Main");
-const workProject = new Project("Work");
-const studyProject = new Project("Study");
+const schoolProject = new Project("School");
 
-app.addProject(defaultProject);
-app.addProject(workProject);
-app.addProject(studyProject);
+Projects.addProject(defaultProject);
+Projects.addProject(schoolProject);
 
-const todo2 = new Todo("Swim in ocean", format(new Date(), "yyyy-MM-dd"), "2018 - 01 - 25", 3);
-// const todo3 = new Todo("Read", format(new Date(), "yyyy-MM-dd"), "2018 - 01 - 25", 3);
-// const todo4 = new Todo("Sleep", format(new Date(), "yyyy-MM-dd"), "2018 - 01 - 25", 3);
-// const todo5 = new Todo("Sing", format(new Date(), "yyyy-MM-dd"), "2018 - 01 - 25", 3);
-// const todo6 = new Todo("Go for a walk", format(new Date(), "yyyy-MM-dd"), "2018 - 01 - 25", 3);
-// const todo7 = new Todo("Become superhero", format(new Date(), "yyyy-MM-dd"), "2018 - 01 - 25", 3);
+const todo2 = new Todo("Swim in ocean", format(new Date(), "yyyy-MM-dd"), "2018-06-25", 2);
+const todo3 = new Todo("Dance tango", format(new Date(), "yyyy-MM-dd"), "2019-11-03", 5);
+const todo4 = new Todo("Finish Homework", format(new Date(), "yyyy-MM-dd"), "2012-11-03", 2);
 
 defaultProject.addTodo(todo2);
-// studyProject.addTodo(todo3);
-// workProject.addTodo(todo4);
-// defaultProject.addTodo(todo5);
-// studyProject.addTodo(todo6);
-// workProject.addTodo(todo7);
+defaultProject.addTodo(todo3);
+schoolProject.addTodo(todo4);
 
 UI.loadAddTodo();
-UI.updateUI(app.getProjects());
-UI.updateProjects(app.getProjects());
-
-
-
+UI.updateTodoList(Projects.giveProjects());
+UI.updateProjects(Projects.giveProjects());
 
 // Add priority +1 
 document.querySelector(".todo--priority-up").addEventListener("click", () => {
@@ -54,24 +44,29 @@ document.querySelector(".todo--priority-down").addEventListener("click", () => {
     }
 });
 
+// Add new todo
 document.querySelector(".main__add-todo").addEventListener("submit", (e) => {
     e.preventDefault();
 
     let todo = document.querySelector("#main__todo").value;
-    let dueDate = document.querySelector('.main__add-todo__date').value;
-    let dateNow = format(new Date(), "yyyy-MM-dd");
-    let priority = document.querySelector('.main__table__add-todo__priority').innerHTML;
-    let project = document.querySelector('.main__add-todo__selection').value;
-    let newTodo = new Todo(todo, dateNow, dueDate, priority);
+    if (todo) {
+        let dueDate = document.querySelector('.main__add-todo__date').value;
+        let dateNow = format(new Date(), "yyyy-MM-dd");
+        let priority = document.querySelector('.main__table__add-todo__priority').innerHTML;
+        let project = document.querySelector('.main__add-todo__selection').value;
+        let newTodo = new Todo(todo, dateNow, dueDate, priority);
 
-    app.addTodoTest(newTodo, project);
-    Projects.addMyProject(newTodo);
-    console.log(Projects.giveMyProjects());
-    // UI.cleanTodoField;
-    UI.loadAddTodo();
-    UI.updateUI(app.getProjects());
+        Projects.addTodo(newTodo, project);
+
+        UI.updateTodoList(Projects.giveProjects());
+
+        // Clean fields after adding new todo
+        document.querySelector("#main__todo").value = '';
+        document.querySelector('.main__add-todo__date').value = '-';
+        document.querySelector('.main__table__add-todo__priority').innerHTML = '1';
+    }
+
 })
-
 
 // Add new project
 document.querySelector('.navigation-add-btn').addEventListener('click', () => {
@@ -84,8 +79,61 @@ document.querySelector('.navigation-add-btn').addEventListener('click', () => {
         e.preventDefault();
         let project = document.querySelector('.navigation__new-project-field').value;
         let newProject = new Project(project);
-        app.addProject(newProject);
-        UI.updateProjects(app.getProjects());
+        Projects.addProject(newProject);
+        UI.updateProjects(Projects.giveProjects());
         document.querySelector('.navigation__new-project').innerHTML = '';
     })
 })
+
+// remove todo OR change tasks priority
+
+document.querySelector(".main__all-todos").addEventListener("click", e => {
+    e.preventDefault()
+    if (e.target.className == "fa-solid fa-trash-can") {
+        let targetTodo = e.target.parentElement.parentElement.children[0].innerHTML;
+        let targetProject = e.target.parentElement.parentElement.children[2].innerHTML;
+        Projects.removeTodo(targetTodo, targetProject)
+        UI.updateTodoList(Projects.giveProjects());
+    }
+
+    // TODO priority for already added TODO add or minus
+    if (e.target.className == "fa-solid fa-arrow-down" || e.target.className == "fa-solid fa-arrow-up") {
+        let priorityNum = e.target.parentElement.children[1].innerHTML;
+        let targetTodo = e.target.parentElement.parentElement.parentElement.children[0].innerHTML
+        let targetProject = e.target.parentElement.parentElement.parentElement.children[2].innerHTML;
+        // Task priority - 1 
+        if (e.target.className == "fa-solid fa-arrow-down" && priorityNum > 1) {
+            Projects.changeTodoPriority(targetTodo, targetProject, parseInt(priorityNum) - 1)
+        }
+        // Task priority + 1 
+        if (e.target.className == "fa-solid fa-arrow-up" && priorityNum < 5) {
+            Projects.changeTodoPriority(targetTodo, targetProject, parseInt(priorityNum) + 1)
+        }
+        UI.updateTodoList(Projects.giveProjects());
+    }
+
+
+})
+
+// remove project AND 
+// sort projects
+document.querySelector(".navigation__projects").addEventListener("click", e => {
+    // remove project 
+    if (e.target.className == "navigation__project--remove") {
+        Projects.removeMyProject(e.target.parentElement.firstChild.innerText)
+        UI.updateProjects(Projects.giveProjects());
+        UI.updateTodoList(Projects.giveProjects());
+    }
+    // SORT
+    if (e.target.className == "navigation__project--name") {
+        Projects.filterToggle(e.target.textContent);
+        UI.updateTodoList(Projects.giveProjects());
+    }
+
+})
+
+
+
+
+
+// SORT BY DUE DATE, sort by creation date, DEFAULT sort by priority and creation date and sort by project

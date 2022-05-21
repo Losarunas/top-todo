@@ -1,9 +1,7 @@
 import { format } from 'date-fns'
-import Projects from './projects.js'
 
 export default class UI {
-    static updateUI(todos) {
-        // console.log(app.getProjects())
+    static updateTodoList(todos) {
         let container = '';
         todos.forEach(project => project.todos.forEach(item => {
             container +=
@@ -19,7 +17,6 @@ export default class UI {
                     <i class="fa-solid fa-arrow-down"></i>
                 </div>
             </td>
-            <td class="main__table__edit"><i class="fa-solid fa-pencil"></i></td>
             <td class="main__table__delete"><i class="fa-solid fa-trash-can"></i></td>
         </tr>`
         }))
@@ -36,7 +33,7 @@ export default class UI {
     <div class="main__todo-group">
         <label for="add-todo__select-projects">Project</label>
         <select name="add-todo__select-projects" class="main__add-todo__selection">
-        
+
         </select>
     </div>
     <div class="main__todo-group main__todo-date">
@@ -62,7 +59,7 @@ export default class UI {
 
     static updateProjects(projects) {
         let container = '';
-        projects.forEach(i => container += `<li class="navigation__project">${i.name}</li>`);
+        projects.forEach(i => container += `<li class="navigation__project"><span class="navigation__project--name">${i.name}</span> <span class="navigation__project--remove">X</span></li>`);
         document.querySelector('.navigation__projects').innerHTML = container;
 
         // ADD TODO - update option list
