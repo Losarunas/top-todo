@@ -2,12 +2,17 @@ export default class Projects {
 
     static projects = []
     static projectsFilter = []
+    static editProject = false;
 
     static addProject(project) {
         this.projects.push(project)
     }
 
     static giveProjects() {
+        return this.projects;
+    }
+
+    static giveFilteredProjects() {
         if (this.projectsFilter.length === 0) {
             return this.projects;
         } else {
@@ -21,7 +26,6 @@ export default class Projects {
             })
             return newArr
         }
-
     }
 
     static removeMyProject(project) {
@@ -48,6 +52,10 @@ export default class Projects {
         this.projects[index].todos.push(todo);
     }
 
+    static getFilters() {
+        return this.projectsFilter
+    }
+
     // HOW THIS WORK I DONT GET IT!!???
     static removeTodo(todo, project) {
         let newArr = [...this.projects]
@@ -61,5 +69,13 @@ export default class Projects {
         const projectIndex = this.projects.findIndex(i => i.name === project);
         const todoIndex = this.projects[projectIndex].todos.findIndex(i => i.title === todo)
         newArr[projectIndex].todos[todoIndex].priority = sum;
+    }
+
+    static getProjectNames() {
+        return this.projects.map(i => i.name)
+    }
+
+    static toggleEditProject() {
+        this.editProject = !this.editProject
     }
 }
