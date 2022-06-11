@@ -7,27 +7,19 @@ import UI from './ui.js';
 import { format } from 'date-fns';
 
 
-// Random todos
-const defaultProject = new Project("Main");
-const schoolProject = new Project("School");
+Projects.getFromLocalStorage();
 
-Projects.addProject(defaultProject);
-Projects.addProject(schoolProject);
+function initialLoad() {
+    UI.loadAddTodo();
+    UI.updateTodoList(Projects.giveProjects());
+    UI.updateProjects(Projects.giveProjects());
+}
 
-const todo2 = new Todo("Swim in ocean", format(new Date(), "yyyy-MM-dd"), "2018-06-25", 2);
-const todo3 = new Todo("Dance tango", format(new Date(), "yyyy-MM-dd"), "2019-11-03", 5);
-const todo4 = new Todo("Finish Homework", format(new Date(), "yyyy-MM-dd"), "2012-11-03", 2);
-
-defaultProject.addTodo(todo2);
-defaultProject.addTodo(todo3);
-schoolProject.addTodo(todo4);
-
-UI.loadAddTodo();
-UI.updateTodoList(Projects.giveProjects());
-UI.updateProjects(Projects.giveProjects());
+initialLoad()
 
 
 // ADD NEW TODO
+// 
 
 // Add new todo
 document.querySelector(".main__add-todo").addEventListener("submit", (e) => {
@@ -78,6 +70,7 @@ document.querySelector(".todo--priority-down").addEventListener("click", () => {
     }
 });
 
+// 
 // END NEW TODO
 
 // Add new project
@@ -119,8 +112,6 @@ document.querySelector('.navigation-add-btn').addEventListener('click', (e) => {
     }
 })
 
-
-
 // remove todo OR change tasks priority
 
 document.querySelector(".main__all-todos").addEventListener("click", e => {
@@ -129,7 +120,7 @@ document.querySelector(".main__all-todos").addEventListener("click", e => {
         let targetTodo = e.target.parentElement.parentElement.children[0].innerHTML;
         let targetProject = e.target.parentElement.parentElement.children[2].innerHTML;
         Projects.removeTodo(targetTodo, targetProject);
-        UI.notification("orange", `Todo: <b>${targetTodo}</b> <br>from project: <b>${targetProject}</b>`)
+        UI.notification("orange", `Removed <br> Todo: <b>${targetTodo}</b> <br>from project: <b>${targetProject}</b>`)
         UI.updateTodoList(Projects.giveFilteredProjects());
     }
 
@@ -172,5 +163,3 @@ document.querySelector(".navigation__projects").addEventListener("click", e => {
     }
 
 })
-
-// SORT BY DUE DATE, sort by creation date, DEFAULT sort by priority and creation date and sort by project

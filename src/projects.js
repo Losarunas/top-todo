@@ -5,7 +5,8 @@ export default class Projects {
     static editProject = false;
 
     static addProject(project) {
-        this.projects.push(project)
+        this.projects.push(project);
+        this.updateLocalStorage();
     }
 
     static giveProjects() {
@@ -35,6 +36,7 @@ export default class Projects {
         });
         newArr.splice(projectIndex, 1);
         this.projects = newArr
+        this.updateLocalStorage();
     }
 
     static filterToggle(project) {
@@ -50,13 +52,13 @@ export default class Projects {
     static addTodo(todo, project) {
         let index = this.projects.findIndex(i => i.name === project);
         this.projects[index].todos.push(todo);
+        this.updateLocalStorage();
     }
 
     static getFilters() {
         return this.projectsFilter
     }
 
-    // HOW THIS WORK I DONT GET IT!!???
     static removeTodo(todo, project) {
         let newArr = [...this.projects]
         const projectIndex = this.projects.findIndex(i => i.name === project);
@@ -69,6 +71,7 @@ export default class Projects {
         const projectIndex = this.projects.findIndex(i => i.name === project);
         const todoIndex = this.projects[projectIndex].todos.findIndex(i => i.title === todo)
         newArr[projectIndex].todos[todoIndex].priority = sum;
+        this.updateLocalStorage();
     }
 
     static getProjectNames() {
@@ -77,5 +80,20 @@ export default class Projects {
 
     static toggleEditProject() {
         this.editProject = !this.editProject
+    }
+
+    static updateLocalStorage() {
+        localStorage.setItem('todo', JSON.stringify(this.projects));
+    }
+
+    static getFromLocalStorage() {
+        if (localStorage.getItem('todo')) {
+            let retrievedObject = localStorage.getItem('todo');
+            this.projects = JSON.parse(retrievedObject)
+        } else {
+            const firstTodo = [{ "name": "Home", "todos": [{ "title": "Dance tango", "date": "2022-06-11", "dueDate": "2025-06-25", "priority": 5, "finished": false }] }, { "name": "Work", "todos": [{ "title": "This project", "date": "2022-06-10", "dueDate": "2025-07-26", "priority": 5, "finished": false }] }, { "name": "You can filter US by clicking", "todos": [] }]
+            this.projects = firstTodo;
+            localStorage.setItem('todo', '');
+        }
     }
 }

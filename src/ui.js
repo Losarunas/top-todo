@@ -3,6 +3,7 @@ import Projects from './projects';
 
 export default class UI {
     static updateTodoList(todos) {
+        console.log(todos)
         let container = '';
         todos.forEach(project => project.todos.forEach(item => {
             container +=
@@ -109,10 +110,9 @@ export default class UI {
         document.querySelector('.header__notification').innerHTML = text;
         document.querySelector('.header__notification').classList.add('header__notification--active');
 
-
         setTimeout(() => {
             document.querySelector('.header__notification').classList.remove('header__notification--active');
-        }, "5000")
+        }, "6000")
 
     }
 

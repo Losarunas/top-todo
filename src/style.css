@@ -78,7 +78,7 @@ header {
 .header__notification--active {
     display: block;
     opacity: 1;
-    animation: fadeIn 5s;
+    animation: fadeIn 6s;
 }
 
 article {
@@ -214,7 +214,7 @@ tr:nth-child(even) {
     background-color: #9575CD;
 }
 
-tr:hover:not(:first-child) {
+.main__todolist tr:hover {
     background-color: #c7a4ff;
 }
 
