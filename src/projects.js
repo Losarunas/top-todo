@@ -9,11 +9,11 @@ export default class Projects {
         this.updateLocalStorage();
     }
 
-    static giveProjects() {
+    static getProjects() {
         return this.projects;
     }
 
-    static giveFilteredProjects() {
+    static getFilteredProjects() {
         if (this.projectsFilter.length === 0) {
             return this.projects;
         } else {
@@ -29,7 +29,7 @@ export default class Projects {
         }
     }
 
-    static removeMyProject(project) {
+    static removeProject(project) {
         let newArr = [...this.projects];
         const projectIndex = this.projects.findIndex(i => {
             return i.name === project;

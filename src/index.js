@@ -11,8 +11,8 @@ Projects.getFromLocalStorage();
 
 function initialLoad() {
     UI.loadAddTodo();
-    UI.updateTodoList(Projects.giveProjects());
-    UI.updateProjects(Projects.giveProjects());
+    UI.updateTodoList(Projects.getProjects());
+    UI.updateProjects(Projects.getProjects());
 }
 
 initialLoad()
@@ -36,7 +36,7 @@ document.querySelector(".main__add-todo").addEventListener("submit", (e) => {
         if (project) {
             Projects.addTodo(newTodo, project);
             UI.notification("green", `You added new todo: ${todo}`)
-            UI.updateTodoList(Projects.giveFilteredProjects());
+            UI.updateTodoList(Projects.getFilteredProjects());
 
             // Clean fields after adding new todo
             document.querySelector("#main__todo").value = '';
@@ -80,12 +80,12 @@ document.querySelector('.navigation-add-btn').addEventListener('click', (e) => {
     if (Projects.editProject) {
         Projects.toggleEditProject()
         UI.removeAddNewProject()
-        UI.updateProjects(Projects.giveProjects());
+        UI.updateProjects(Projects.getProjects());
     }
     else {
         UI.addNewProject();
         Projects.toggleEditProject()
-        UI.updateProjects(Projects.giveProjects());
+        UI.updateProjects(Projects.getProjects());
         document.querySelector('.navigation__new-project-form').addEventListener('submit', e => {
             e.preventDefault();
             let projectName = document.querySelector('.navigation__new-project-field').value;
@@ -98,7 +98,7 @@ document.querySelector('.navigation-add-btn').addEventListener('click', (e) => {
                     let newProject = new Project(projectName);
                     Projects.addProject(newProject);
                     Projects.toggleEditProject()
-                    UI.updateProjects(Projects.giveProjects());
+                    UI.updateProjects(Projects.getProjects());
                     UI.removeAddNewProject()
                     UI.notification("green", "Added new project!")
                 } else {
@@ -121,7 +121,7 @@ document.querySelector(".main__all-todos").addEventListener("click", e => {
         let targetProject = e.target.parentElement.parentElement.children[2].innerHTML;
         Projects.removeTodo(targetTodo, targetProject);
         UI.notification("orange", `Removed <br> Todo: <b>${targetTodo}</b> <br>from project: <b>${targetProject}</b>`)
-        UI.updateTodoList(Projects.giveFilteredProjects());
+        UI.updateTodoList(Projects.getFilteredProjects());
     }
 
     // TODO priority for already added TODO add or minus
@@ -138,7 +138,7 @@ document.querySelector(".main__all-todos").addEventListener("click", e => {
         if (e.target.className == "fa-solid fa-arrow-up" && priorityNum < 5) {
             Projects.changeTodoPriority(targetTodo, targetProject, parseInt(priorityNum) + 1)
         }
-        UI.updateTodoList(Projects.giveFilteredProjects());
+        UI.updateTodoList(Projects.getFilteredProjects());
     }
 
 
@@ -150,16 +150,16 @@ document.querySelector(".navigation__projects").addEventListener("click", e => {
 
     // remove project 
     if (e.target.className == "navigation__project--remove") {
-        Projects.removeMyProject(e.target.parentElement.firstChild.innerText)
-        UI.updateProjects(Projects.giveProjects());
-        UI.updateTodoList(Projects.giveFilteredProjects());
+        Projects.removeProject(e.target.parentElement.firstChild.innerText)
+        UI.updateProjects(Projects.getProjects());
+        UI.updateTodoList(Projects.getFilteredProjects());
         UI.notification("orange", `Removed project: <b>${e.target.parentElement.firstChild.innerText}</b>`)
     }
     // FILTER
     if (e.target.className == "navigation__project--name" || e.target.className == "navigation__project--name navigation__project--name--bold") {
         Projects.filterToggle(e.target.textContent);
-        UI.updateProjects(Projects.giveProjects());
-        UI.updateTodoList(Projects.giveFilteredProjects());
+        UI.updateProjects(Projects.getProjects());
+        UI.updateTodoList(Projects.getFilteredProjects());
     }
 
 })
